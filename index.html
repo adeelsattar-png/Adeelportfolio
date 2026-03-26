@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Adeel Sattar - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1.5rem 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 1.1rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        /* Hero Section */
+        #hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff15"/><stop offset="100%" stop-color="%23ffffff00"/></radialGradient></defs><circle cx="20" cy="20" r="2" fill="url(%23a)"><animate attributeName="r" values="2;3;2" dur="3s" repeatCount="indefinite"/></circle><circle cx="80" cy="80" r="1.5" fill="url(%23a)"><animate attributeName="r" values="1.5;2.5;1.5" dur="4s" repeatCount="indefinite"/></circle></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        #hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: slideInDown 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        #hero p {
+            font-size: clamp(1.2rem, 4vw, 2rem);
+            font-weight: 400;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            animation: slideInUp 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.8s both;
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.6);
+        }
+
+        /* Sections */
+        section {
+            padding: 8rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        section:nth-child(odd) {
+            background: #fafbff;
+        }
+
+        section:nth-child(even) {
+            background: #ffffff;
+        }
+
+        h2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            text-align: center;
+            margin-bottom: 4rem;
+            color: #2d3748;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        /* About */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-img {
+            width: 350px;
+            height: 350px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+            animation: float 6s ease-in-out infinite, pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-img::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: conic-gradient(from 0deg, transparent 0deg, rgba(255,255,255,0.1) 90deg, transparent 180deg);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3); }
+            50% { box-shadow: 0 20px 60px rgba(102, 126, 234, 0.5); }
+        }
+
+        .about-text h3 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            color: #2d3748;
+            position: relative;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        /* Skills */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .skill:hover::before {
+            transform: scaleX(1);
+        }
+
+        .skill:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+        }
+
+        .skill h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .skill p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .project::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .project:hover {
+            transform: translateY(-20px);
+            box-shadow: 0 35px 80px rgba(0,0,0,0.2);
+        }
+
+        .project img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .project:hover img {
+            transform: scale(1.05);
+        }
+
+        .project-content {
+            padding: 2rem;
+        }
+
+        .project h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+
+        .project p {
+            color: #64748b;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        /* Resume */
+        #resume {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .resume-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .resume-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .resume-header h1 {
+            font-size: 3rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .contact-details div {
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .career-objective {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            margin-bottom: 3rem;
+        }
+
+        .career-objective h3 {
+            font-size: 1.6rem;
+            color: #1e293b;
+            margin-bottom: 1rem;
+        }
+
+        .resume-section {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .resume-section h3 {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .skills-list, .projects-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .skill-item, .project-item {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .languages {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .language {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+
+        .interests {
+            text-align: center;
+        }
+
+        .interests ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .interests li {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+        }
+
+        /* Contact Form */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-item h3 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .contact-item p, .contact-item a {
+            color: #64748b;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-item a:hover {
+            color: #667eea;
+        }
+
+        form {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 1.2rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        form input:focus, form textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        form button {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInDown {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes slideInLeft {
+            from { transform: translateX(-50px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 4rem 1rem;
+            }
+        }
+
+        /* Scroll animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <ul>
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <section id="hero" class="reveal">
+        <h1>Muhammad Adeel Sattar</h1>
+        <p>Web Developer, Python & SQL Developer</p>
+        <a href="#projects" class="btn">View My Work →</a>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="reveal">
+        <h2>About Me</h2>
+        <div class="about-container">
+            <img src="adeel profile.jpeg" alt="Muhammad Adeel Sattar" class="profile-img" style="width:350px;height:350px;border-radius:50%;object-position:top;object-fit:cover;box-shadow:0 20px 60px rgba(102,126,234,0.3);animation:float 6s ease-in-out infinite, pulse 2s infinite;" loading="lazy">
+            <div class="about-text">
+                <h3>Passionate Developer</h3>
+                <p>I am a dedicated Web Developer proficient in HTML, CSS, JavaScript, Python, and SQL. I specialize in creating responsive web applications, robust backend solutions, and efficient database systems. Committed to writing clean, maintainable code and continuously learning cutting-edge technologies.</p>
+                <a href="#contact" class="btn">Get In Touch →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="reveal">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill">
+                <h3>Web Developer</h3>
+                <p>HTML, CSS, JavaScript</p>
+            </div>
+            <div class="skill">
+                <h3>Python Developer</h3>
+                <p>Python Development</p>
+            </div>
+            <div class="skill">
+                <h3>SQL Developer</h3>
+                <p>Database Management & Queries</p>
+            </div>
+            <div class="skill">
+                <h3>Canva Editor</h3>
+                <p>Graphic Design & Visual Content</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects" class="reveal">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=80" alt="Campus Navigator" loading="lazy">
+                <div class="project-content">
+                    <h3>Campus Navigator</h3>
+                    <p>Campus navigation application to help students find locations and buildings easily.</p>
+                    <a href="https://github.com/adeelsattar-png/Campus-Navigator" class="btn" target="_blank">View Project →</a>
+                </div>
+            </div>
+            <div class="project">
+                <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1000&q=80" alt="Image Gallery" loading="lazy">
+                <div class="project-content">
+                    <h3>Image Gallery</h3>
+                    <p>Interactive image gallery application with smooth animations and responsive design.</p>
+                    <a href="https://github.com/adeelsattar-png/Image-Gallery" class="btn" target="_blank">View Project →</a>
+                </div>
+            </div>
+            <div class="project">
+               <img src="https://images.unsplash.com/photo-1587145820266-a5951ee6f620?auto=format&fit=crop&w=1000&q=80" alt="Calculator" loading="lazy">
+                <div class="project-content">
+                    <h3>Calculator</h3>
+                    <p>Advanced calculator application with scientific functions and beautiful UI.</p>
+                    <a href="https://github.com/adeelsattar-png/calculator" class="btn" target="_blank">View Project →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume -->
+    <section id="resume" class="reveal">
+        <div class="resume-container">
+            <div class="resume-header">
+                <h1>MUHAMMAD ADEEL SATTAR</h1>
+                <div class="contact-details">
+                    <div>📧 adeelsattar268@gmail.com</div>
+                    <div>📞 03019895293</div>
+                    <div>www.linkedin.com/in/adeel-sattar-b54ba73a5</div>
+                </div>
+            </div>
+
+            <div class="career-objective">
+                <h3>Career Objective</h3>
+                <p>Motivated Computer Science student with skills in programming and web development. I am interested in learning new technologies and building useful software projects. My goal is to gain practical experience and grow as a professional developer.</p>
+            </div>
+
+            <div class="resume-section">
+                <h3>🎓 Education</h3>
+                <p><strong>BS Computer Science</strong><br>
+                COMSAT UNIVERSITY ISLAMABAD SAHIWAL CAMPUS.<br>
+                <em>Currently Studying</em></p>
+            </div>
+
+            <div class="resume-section">
+                <h3>💻 Skills</h3>
+                <div class="skills-list">
+                    <div class="skill-item">Java Programming</div>
+                    <div class="skill-item">Python Programming</div>
+                    <div class="skill-item">Web Development (Basic)</div>
+                    <div class="skill-item">SQL DATABASE</div>
+                    <div class="skill-item">C++ (BASIC DATA STRUCTURE)</div>
+                    <div class="skill-item">Canva Designing</div>
+                    <div class="skill-item">MS Word / PowerPoint</div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h3>🚀 Projects</h3>
+                <div class="projects-list">
+                    <div class="project-item">
+                        <strong>Campus Navigator (Java Project)</strong><br>
+                        Developed a Java-based application that helps users navigate and find locations on a campus easily.
+                    </div>
+                <div class="project-item">\n                        <strong>Image Gallery</strong><br>\n                        Interactive image gallery application with smooth animations and responsive design.<br>\n                        <a href="https://github.com/adeelsattar-png/Image-Gallery" target="_blank">View Project</a>\n                    </div>
+                    <div class="project-item">\n                        <strong>Calculator</strong><br>\n                        Advanced calculator application with scientific functions and beautiful UI.<br>\n                        <a href="https://github.com/adeelsattar-png/calculator" target="_blank">View Project</a>\n                    </div>
+                </div>
+            </div>
+
+            <div class="resume-section">
+                <h3>🌐 Languages</h3>
+                <div class="languages">
+                    <div class="language">Urdu</div>
+                    <div class="language">English</div>
+                </div>
+            </div>
+
+            <div class="resume-section interests">
+                <h3>🎯 Interests</h3>
+                <ul>
+                    <li>Coding</li>
+                    <li>Learning new technologies</li>
+                    <li>Machine Learning</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="reveal">
+        <h2>Contact Me</h2>
+        <div class="contact-grid">
+            <div>
+                <h3>📬 Get in touch</h3>
+                <p>adeelsattar268@gmail.com</p>
+                <p>+923019895293</p>
+            </div>
+            <form>
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message →</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(anchor.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('scrolled', window.scrollY > 100);
+        });
+
+        // Scroll reveal animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Form handling
+        document.querySelector('form').addEventListener('submit', e => {
+            e.preventDefault();
+            alert('Thank you! Your message has been sent. I\'ll get back to you soon.');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
